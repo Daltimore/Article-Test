@@ -9,6 +9,7 @@ return parent.appendChild(el);
 }
 
 let articles
+let currentPage = 1
 
 let ApiURL = 'http://5e0df4b536b80000143db9ca.mockapi.io/etranzact/v1/article'
 
@@ -16,7 +17,6 @@ fetch(ApiURL).then((response) => {
   return response.json();
 }).then((json) => {
   articles = json;
-  console.log(articles)
   initialize();
 }).catch(function(err) {
   console.log('Fetch problem: ' + err.message);
@@ -29,18 +29,34 @@ function initialize() {
     const section = createNode('div');
     section.setAttribute('class', 'articles');
 
+    const pagination_element = createNode('div')
+    pagination_element.setAttribute('class', 'page-numbers')
+    pagination_element.setAttribute('id', 'pagination')
+
     for(let article of articles){
       const card = createNode('div');
       card.setAttribute('class', 'card')
 
-      console.log(article.id,article.author)
+      const actionSection = createNode('div')
+      actionSection.setAttribute('class', 'action-section')
+
+      const delete_button = createNode('button');
+      delete_button.setAttribute('class','delete-button')
+      delete_button.innerHTML = `<i class="fas fa-trash"></i>`
+      delete_button.setAttribute('id','delete')
+
+      const view_button = createNode('button')
+      view_button.setAttribute('class', 'view-button')
+      view_button.innerHTML = `<i class="fas fa-eye"></i>`
+
 
       const h4 = createNode('h4')
-      h4.innerHTML = truncateString(article.title, 30)
+      h4.innerHTML = truncateString(article.title.replace(article.title.charAt(0), article.title.charAt(0).toUpperCase()), 30)
 
       const link = createNode('a')
       link.setAttribute('class', 'article-link')
       link.setAttribute('href', `${article.url}`)
+      link.setAttribute('target', '_blank')
       link.innerHTML = 'Visit Link'
 
       const imgContainer = createNode('div')
@@ -62,19 +78,68 @@ function initialize() {
         autorName.innerHTML = sortedNames
       }
 
+      append(actionSection, view_button)
+      append(actionSection, delete_button)
+      append(card, actionSection)
       append(card, h4)
       append(card, link)
       append(card, imgContainer)
       append(imgContainer, img)
       append(imgContainer, autorName)
       append(section, card)
+      append(section, pagination_element)
     }
 
 
 
-    append(main, section)
+  append(main, section)
 
 }
+
+const rt = Object.values(document.getElementsByClassName('delete-button'))
+
+console.log(rt)
+
+document.getElementById('createForm').addEventListener('submit', createArticle)
+
+function createArticle(event) {
+
+  event.preventDefault();
+
+  const URL = 'http://5e0df4b536b80000143db9ca.mockapi.io/etranzact/v1/article'
+
+  let author = document.getElementById('author').value
+  let avatar = document.getElementById('avatar').value
+  let title = document.getElementById('title').value
+  let url = document.getElementById('url').value
+
+  fetch(URL, {
+    method: 'POST',
+    headers: new Headers(),
+    body: JSON.stringify({
+      author: author,
+      avatar: avatar,
+      title: title,
+      url:url
+    })
+  }).then((res) => res.json())
+  .then((data) => console.log(data))
+  .catch((error) => console.log(error))
+}
+
+document.getElementsByClassName('delete-button')
+
+
+function deleteArticle(article) {
+  let url = `http://5e0df4b536b80000143db9ca.mockapi.io/etranzact/v1/article`
+  fetch(url, {
+    method: 'DELETE',
+    params: article.id
+  })
+}
+
+let viewArticle = document.getElementsByClassName('view-button')
+// console.log(viewArticle)
 
 // Modal 
 const openEls = document.querySelectorAll("[data-open]");
@@ -128,3 +193,19 @@ function getRandom(arr, n) {
   }
   return result;
 }
+
+function paginateData(data_per_page, page) {
+  fetch(ApiURL).then((response) => {
+    return response.json();
+  }).then((json) => {
+    pagArticles = json;
+  }).catch((err) => {
+    console.log('Fetch problem: ' + err.message);
+  });
+
+  console.log()
+  //   let loop_start = data_per_page * page
+  // let paginatedItems = article.slice(loop_start, loop_start + data_per_page)
+  // console.log(paginatedItems)
+}
+

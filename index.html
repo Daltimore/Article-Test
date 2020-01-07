@@ -7,6 +7,7 @@
   <title>Article Test</title>
   <link rel="stylesheet" href="style.css">
   <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 </head>
 <body>
   <div id="root">
@@ -42,21 +43,45 @@
     <div class="modal" id="modal1" data-animation="slideInOutLeft">
       <div class="modal-dialog">
         <header class="modal-header">
-          The header of the first modal
           <button class="close-modal" aria-label="close modal" data-close>
             ✕  
           </button>
         </header>
         <section class="modal-content">
-          <p><strong>Press ✕, ESC, or click outside of the modal to close it</strong></p>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo repellendus reprehenderit accusamus totam ratione! Nesciunt, nemo dolorum recusandae ad ex nam similique dolorem ab perspiciatis qui. Facere, dignissimos. Nemo, ea.</p>
-          <p>Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure. To take a trivial example, which of us ever undertakes laborious physical exercise, except to obtain some advantage from it? But who has any right to find fault with a man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure</p>
-          <p>Nullam vitae enim vel diam elementum tincidunt a eget metus. Curabitur finibus vestibulum rutrum. Vestibulum semper tellus vitae tortor condimentum porta. Sed id ex arcu. Vestibulum eleifend tortor non purus porta dapibus</p>
-          <p>Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure. To take a trivial example, which of us ever undertakes laborious physical exercise, except to obtain some advantage from it? But who has any right to find fault with a man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure</p>
+          <h2>Create Article</h2>
+          <form class="create-form" id="createForm">
+            <div class="form-control">
+              <input type="text" placeholder="Enter Author" id="author">
+            </div>
+            <div class="form-control">
+              <input type="text" placeholder="Add Avatar" id="avatar">
+            </div>
+            <div class="form-control">
+              <input type="text" placeholder="Add Title" id="title">
+            </div>
+            <div class="form-control">
+              <input type="text" placeholder="Enter URL" id="url">
+            </div>
+            <div class="button-container">
+              <button class="submit-btn" type="submit" id="submit-me">
+                Submit
+              </button>
+            </div>
+          </form>
         </section>
-        <footer class="modal-footer">
-          The footer of the first modal
-        </footer>
+      </div>
+    </div>
+
+    <div class="modal" id="modal2" data-animation="slideInOutLeft">
+      <div class="modal-dialog">
+        <header class="modal-header">
+          <button class="close-modal" aria-label="close modal" data-close>
+            ✕  
+          </button>
+        </header>
+        <section class="modal-content">
+          
+        </section>
       </div>
     </div>
     
