@@ -22,6 +22,24 @@ fetch(ApiURL).then((response) => {
   console.log('Fetch problem: ' + err.message);
 });
 
+function viewContent(e){
+  e.preventDefault()
+  e.stopPropagation()
+  const id = e.target.getAttribute('data-id');
+  if(id) {
+    openModal(e)
+  }
+}
+
+function openModal(e) {
+  const modalId = e.target.dataset.open;
+    document.getElementById(modalId).classList.add(isVisible);
+}
+
+function closeModal() {
+
+}
+
 function initialize() {
   const main = document.querySelector('main');
   
@@ -47,7 +65,10 @@ function initialize() {
 
       const view_button = createNode('button')
       view_button.setAttribute('class', 'view-button')
-      view_button.innerHTML = `<i class="fas fa-eye"></i>`
+      view_button.setAttribute('data-id', article.id)
+      view_button.setAttribute('data-open', 'modal2')
+      view_button.addEventListener('click', viewContent)
+      view_button.innerHTML = 'view'
 
 
       const h4 = createNode('h4')
@@ -147,10 +168,7 @@ const closeEls = document.querySelectorAll("[data-close]");
 const isVisible = "is-visible";
 
 for (const el of openEls) {
-  el.addEventListener("click", function() {
-    const modalId = this.dataset.open;
-    document.getElementById(modalId).classList.add(isVisible);
-  });
+  el.addEventListener("click", openModal);
 }
 
 for (const el of closeEls) {

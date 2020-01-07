@@ -152,12 +152,74 @@ body {
 
 .action-section button {
   background: transparent;
-  border: none;
+  border: 1px solid #eee;
   cursor: pointer;
   color: rgb(104, 40, 40);
   font-size: 1rem;
+  margin-right: 0.7rem;
+  padding: 0.4rem;
+  border-radius: 5px;
 }
 
+.show__content {
+  width: 40rem;
+  padding: 1rem;
+  text-align: center;
+  align-items: center;
+}
+
+.show__content h3 { 
+  width: 60%;
+  margin: auto;
+  margin-bottom: 1.5rem;
+}
+
+.show__content img { 
+  border-radius: 100%;
+  width: 8rem;
+  object-fit: contain;
+  margin-bottom: 2rem;
+}
+
+.show__content a { 
+  color: #222222;
+}
+
+.show__content h2 { 
+  color: #222222;
+  margin-top: 1rem;
+}
+
+.show__content .comment__section {
+  display: flex;
+  justify-content: space-between;
+}
+
+.show__content .comment__section img {
+  border-radius: 100%;
+  width: 3rem;
+  height: 3rem;
+  margin-right: 2rem;
+  margin-top: 2rem;
+}
+
+.show__content .comment__section p {
+  text-align: start;
+}
+
+.comment {
+  width: 75%;
+  margin: auto;
+  resize: none;
+}
+
+.comment__btn {
+  float: right;
+  padding: 0.5rem;
+  background: transparent;
+  border: 1px solid #eee;
+  border-radius: 5px;
+}
 
 .modal {
   position: fixed;
