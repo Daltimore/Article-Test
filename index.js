@@ -10,20 +10,72 @@ return parent.appendChild(el);
 
 let articles
 let comments
-let currentPage = 1
+
+
 let page = 1
 let limit = 10
 
-let ApiURL = `http://5e0df4b536b80000143db9ca.mockapi.io/etranzact/v1/article?page=1&limit=10`
+
+let ApiURL = `http://5e0df4b536b80000143db9ca.mockapi.io/etranzact/v1/article?page=${page}&limit=${limit}`
+
+
 
 fetch(ApiURL).then((response) => {
   return response.json();
 }).then((json) => {
   articles = json;
   initialize();
+  changePage(1);
 }).catch(function(err) {
   console.log('Fetch problem: ' + err.message);
 });
+
+function prevPage() {
+  if (page > 1) {
+      page--;
+      changePage(page);
+  }
+}
+
+function nextPage() {
+  if (page < numPages()) {
+      page++;
+      changePage(page);
+  }
+}
+
+function changePage(page){
+  let prevButton = document.getElementById('previous')
+  let nextButton = document.getElementById('next')
+  let content = document.getElementsByClassName('articles');
+  let page_span = document.getElementsByClassName("card");
+ 
+    // Validate page
+    if (page < 1) page = 1;
+    if (page > numPages()) page = numPages();
+
+    content.innerHTML = "";
+
+    for (var i = (page-1) * limit; i < (page * limit); i++) {
+        content.innerHTML += articles[i];
+    }
+    page_span.innerHTML = page;
+
+    if (page == 1) {
+      prevButton.style.visibility = "hidden";
+    } else {
+      prevButton.style.visibility = "visible";
+    }
+
+    if (page == numPages()) {
+      nextButton.style.visibility = "hidden";
+    } else {
+      nextButton.style.visibility = "visible";
+    }
+}
+function numPages(){
+  return Math.ceil(articles.length / limit);
+}
 
 function viewContent(e){
   e.preventDefault()
