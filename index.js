@@ -9,6 +9,7 @@ return parent.appendChild(el);
 }
 
 let articles
+let comments
 let currentPage = 1
 
 let ApiURL = 'http://5e0df4b536b80000143db9ca.mockapi.io/etranzact/v1/article'
@@ -28,16 +29,83 @@ function viewContent(e){
   const id = e.target.getAttribute('data-id');
   if(id) {
     openModal(e)
+    articles.forEach(article => {
+      const articleId = article.id
+      if(articleId == id) {
+        console.log(article.id)
+        const attachTitle = document.getElementById('viewTitle')
+        attachTitle.innerHTML = article.title
+
+        const attachLink = document.getElementById('viewId')
+        attachLink.href = article.url
+
+        const attachImage = document.getElementById('viewImg')
+        attachImage.src = article.avatar
+
+        document.getElementById('commmentBtn'),addEventListener('click', submitComment)
+         function submitComment() {
+          const URL = `http://5e0df4b536b80000143db9ca.mockapi.io/etranzact/v1/article/${id}/comments`
+
+        let comment = document.getElementById('commentText').value
+        let avatar = document.getElementById('viewImg').src
+
+        fetch(URL, {
+          method: 'POST',
+          headers: new Headers(),
+          body: JSON.stringify({
+            comment: comment,
+            avatar: avatar
+          })
+        }).then((res) => res.json())
+        .then((data) => console.log(data))
+        .catch((error) => console.log(error))
+        
+        // alert('Article has been added!')
+        // location.reload()
+        }
+      
+        const URL = `http://5e0df4b536b80000143db9ca.mockapi.io/etranzact/v1/article/${id}/comments`
+        fetch(URL).then((response) => {
+          return response.json();
+        }).then((json) => {
+          comments = json
+          if(id) {
+            comments.forEach(comment => {
+              const commentId = comment.id
+              if(commentId) {
+                const name = document.getElementById('commentName')
+                name.innerHTML = comment.name
+
+                const commentTextArea = document.getElementById('commentTxt')
+                commentTextArea.innerHTML = comment.comment
+
+                const commentImage = document.getElementById('commentImg')
+                commentImage.src = comment.avatar
+              }
+            })
+          }
+        })
+      }
+    })
+    }
+}
+
+function deleteArticle(e) {
+  const id = e.target.getAttribute('data-id')
+  if(id) {
+    let url = `http://5e0df4b536b80000143db9ca.mockapi.io/etranzact/v1/article/${id}`
+    fetch(url, {
+      method: 'DELETE'
+    })
+    alert('Article has been Deleted!')
+    location.reload();
   }
 }
+
 
 function openModal(e) {
   const modalId = e.target.dataset.open;
     document.getElementById(modalId).classList.add(isVisible);
-}
-
-function closeModal() {
-
 }
 
 function initialize() {
@@ -60,8 +128,10 @@ function initialize() {
 
       const delete_button = createNode('button');
       delete_button.setAttribute('class','delete-button')
-      delete_button.innerHTML = `<i class="fas fa-trash"></i>`
+      delete_button.setAttribute('data-id', article.id)
+      delete_button.innerHTML = 'Trash'
       delete_button.setAttribute('id','delete')
+      delete_button.addEventListener('click', deleteArticle)
 
       const view_button = createNode('button')
       view_button.setAttribute('class', 'view-button')
@@ -117,10 +187,6 @@ function initialize() {
 
 }
 
-const rt = Object.values(document.getElementsByClassName('delete-button'))
-
-console.log(rt)
-
 document.getElementById('createForm').addEventListener('submit', createArticle)
 
 function createArticle(event) {
@@ -146,21 +212,10 @@ function createArticle(event) {
   }).then((res) => res.json())
   .then((data) => console.log(data))
   .catch((error) => console.log(error))
+
+  alert('Article has been added successfully')
+  location.reload()
 }
-
-document.getElementsByClassName('delete-button')
-
-
-function deleteArticle(article) {
-  let url = `http://5e0df4b536b80000143db9ca.mockapi.io/etranzact/v1/article`
-  fetch(url, {
-    method: 'DELETE',
-    params: article.id
-  })
-}
-
-let viewArticle = document.getElementsByClassName('view-button')
-// console.log(viewArticle)
 
 // Modal 
 const openEls = document.querySelectorAll("[data-open]");

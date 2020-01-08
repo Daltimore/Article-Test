@@ -192,19 +192,19 @@ body {
 
 .show__content .comment__section {
   display: flex;
-  justify-content: space-between;
 }
 
 .show__content .comment__section img {
   border-radius: 100%;
-  width: 3rem;
-  height: 3rem;
-  margin-right: 2rem;
+  width: 5rem;
+  height: 5rem;
+  margin-right: 1rem;
   margin-top: 2rem;
 }
 
 .show__content .comment__section p {
   text-align: start;
+  margin-top: -2rem;
 }
 
 .comment {
@@ -257,13 +257,15 @@ body {
   padding: 1rem;
 }
 
-.modal-header {
-  background: #efefef;
-}
 
 .modal-header {
+  position: fixed;
+}
+
+.comment-name {
   display: flex;
-  justify-content: flex-end;
+  justify-content: flex-start;
+  font-size: 1.5rem;
 }
 
 .modal-content h2 {
@@ -291,6 +293,9 @@ body {
 
 .modal-header .close-modal {
   font-size: 1.5rem;
+  background: transparent;
+  border: none;
+  color: rgb(236, 65, 65);
 }
 
 .modal p + p {
