@@ -11,8 +11,10 @@ return parent.appendChild(el);
 let articles
 let comments
 let currentPage = 1
+let page = 1
+let limit = 10
 
-let ApiURL = 'http://5e0df4b536b80000143db9ca.mockapi.io/etranzact/v1/article'
+let ApiURL = `http://5e0df4b536b80000143db9ca.mockapi.io/etranzact/v1/article?page=1&limit=10`
 
 fetch(ApiURL).then((response) => {
   return response.json();
